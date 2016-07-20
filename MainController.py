@@ -1,5 +1,5 @@
 """
-    Author: Andres Andreu <andres [at] neurofuzz dot com>
+    Author: Andres Andreu <andres [at] neurofuzzsecurity dot com>
     Company: neuroFuzz, LLC
     Original Date: 1/1/2012
     Last Modified: 7/19/2016
