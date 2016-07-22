@@ -2,9 +2,10 @@
     Author: Andres Andreu <andres [at] neurofuzzsecurity dot com>
     Company: neuroFuzz, LLC
     Original Date: 1/1/2012
-    Last Modified: 1/13/2012
+    Last Modified: 7/22/2016
+    Last Modified by: Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
-    The remote command class of scp-swarm.
+    The remote command class of scp-scatter.
     Basically this uses paramiko to run remote commands over SSH.
 """
 try:
@@ -29,7 +30,8 @@ class RemoteCommander():
         self.goObj = goObj
         self.commands = {'md5':'md5sum ',
                          'cat':'cat ',
-                         'rm':'yes|rm '
+                         'rm':'yes|rm ',
+                         'mkdir':'mkdir -p '
                         }
         
     def populate_info(self):
