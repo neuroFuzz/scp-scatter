@@ -2,21 +2,23 @@
     Author: Andres Andreu <andres [at] neurofuzzsecurity dot com>
     Company: neuroFuzz, LLC
     Original Date: 1/1/2012
-    Last Modified: 7/19/2016
-    Last Modified by: Muthukumar Thevar <muthukumar dot thevar [at] yahoo dot com>
+    Last Modified: 7/21/2016
+    Last Modified by: Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
     The main controller of scp-swarm.
     This is the run time controller of all the actions that scp-swarm triggers.
 """
-from libs.GetOpts import GetOptions
-from libs.FileSplitter import FileSplitter
-from libs.Transport import XPort
-from libs.RemoteCommander import RemoteCommander
 from threading import Thread
 from Queue import Queue
 import multiprocessing
 import time
 
+from libs.GetOpts import GetOptions
+from libs.FileSplitter import FileSplitter
+from libs.Transport import XPort
+from libs.RemoteCommander import RemoteCommander
+
+USE_TOR = False
 spacer = "    "
 def printOut(s):
     print "%sXFer Finished: %s".lstrip() % (spacer,s)
@@ -29,6 +31,15 @@ def mainRun():
     goObj = GetOptions()
     # populate
     goObj.get_info()
+    
+    USE_TOR = goObj.getUseTor()
+    if USE_TOR:
+        from libs.nf_toolkit_requirements import get_required_paths
+        exe_paths = get_required_paths()
+        if exe_paths.has_key('error_message'):
+            print "\n%s\n\n" % exe_paths['error_message']
+            import sys
+            sys.exit()
     ################################################
     '''
         create FileSplitter object and 
@@ -97,6 +108,8 @@ def mainRun():
         destination
     '''
     put_files(fsp.get_flist())
+    
+    
     ################################################
     '''
         remotely reconstruct file from the chunks
