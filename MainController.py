@@ -64,10 +64,14 @@ def mainRun():
                 start a new XPort thread
             '''
             for fhandle in files:
-                thread = XPort(hostname=goObj.getHostName(),username=goObj.getUserName(),
-                               port=goObj.getPort(),password=goObj.getPassword(),
-                               hostkeyname=goObj.getHostKeyName(),fname=fhandle,
-                               remotepath=goObj.getRemotePath())
+                thread = XPort(hostname=goObj.getHostName(),
+                               username=goObj.getUserName(),
+                               port=goObj.getPort(),
+                               password=goObj.getPassword(),
+                               hostkeyname=goObj.getHostKeyName(),
+                               fname=fhandle,
+                               remotepath=goObj.getRemotePath()
+                               )
                 thread.start()
                 '''
                     add the thread to the queue. The second parameter, boolean True, 
