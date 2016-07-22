@@ -74,7 +74,10 @@ class RemoteCommander():
             
             447521efba1703445d050ddb24fe76b8  rand100.dat
         '''
-        return stdout.read().split()[0]
+        try:
+            return stdout.read().split()[0]
+        except:
+            return None
     
     def clean_chunks(self, fl=[]):
         '''
