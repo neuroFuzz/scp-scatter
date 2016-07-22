@@ -2,8 +2,8 @@
     Author: Andres Andreu <andres [at] neurofuzzsecurity dot com>
     Company: neuroFuzz, LLC
     Original Date: 1/1/2012
-    Last Modified: 7/20/2016
-    Last Modified by: Muthukumar Thevar <muthukumar dot thevar [at] yahoo dot com>
+    Last Modified: 7/21/2016
+    Last Modified by: Andres Andreu <andres [at] neurofuzzsecurity dot com>
 
     The variable setting class of scp-swarm.
     Basically this either grabs variables from the ones set here or it asks the
@@ -16,7 +16,9 @@ import paramiko
 
 #################################################
 # vars that can be changed
-debug = False
+DEBUG = False
+USE_TOR = False
+
 hostname = 'hostname'
 theport = 22
 username = 'user'
@@ -43,8 +45,11 @@ class GetOptions:
         self.numofchunks = numofchunks
         self.remotepath = remotepath
         self.cleanup = cleanup
-        self.debug = debug
         self.postfix = postfix
+        
+        self.debug = DEBUG
+        self.use_tor = USE_TOR
+        
         
     def get_info(self):
         ################################################
@@ -114,7 +119,6 @@ class GetOptions:
                 hostkeytype = host_keys[self.hostname].keys()[0]
                 self.hostkey = host_keys[self.hostname][hostkeytype]
                 if debug:
-                    
                     print 'Using host key at %s of type %s' % (self.hostkeyname,hostkeytype)
         ################################################
         
@@ -153,4 +157,7 @@ class GetOptions:
     
     def getPostFix(self):
         return self.postfix
+    
+    def getUseTor(self):
+        return self.use_tor
 # EOC
