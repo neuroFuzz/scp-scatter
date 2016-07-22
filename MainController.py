@@ -49,7 +49,9 @@ def mainRun():
     fsp = FileSplitter(filename=goObj.getFileName(), 
                        numchunks=goObj.getNumberOfChunks(),
                        remotepath=goObj.getRemotePath(), 
-                       debug=goObj.getDebug(),postfix=goObj.getPostFix())
+                       debug=goObj.getDebug(),
+                       postfix=goObj.getPostFix()
+                       )
     fsp.do_work()
     # get hash of local file
     localmd5hash = fsp.get_hash()
@@ -100,6 +102,21 @@ def mainRun():
         prod_thread.join()
         cons_thread.join()
     # EOF
+    
+    ################################################
+    '''
+        make sure destination path exists
+    '''
+    rc = RemoteCommander(goObj=goObj)
+    rc.populate_info()
+    rc.create_connection()
+    cmd = rc.construct_command(cmd='mkdir', stmt=goObj.getRemotePath())
+    print "\nEnsuring remote target path exists\n"
+    print "Remote statement used:\n%s\n" % cmd
+    rc.run_no_response(command=cmd)
+    rc.close()
+    ################################################
+    
     '''
         fsp.get_flist() returns an array/list
         call the put_files func to kick off
